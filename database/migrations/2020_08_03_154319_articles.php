@@ -18,9 +18,10 @@ class Articles extends Migration
             $table->timestamps();
             $table->string('name');
             $table->dateTime('date');
-            $table->string('content');
+            $table->string('content', 1024);
             $table->foreign('user_id')->references('id')->on('users');
             $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->softDeletes();
         });
     }
 
