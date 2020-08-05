@@ -41,11 +41,9 @@ Route::group(['prefix'=>'/pictures','as'=>'pictures.'],function(){
     Route::get('/create', 'PictureController@create')->name('create');
     Route::post('/store', 'PictureController@store')->name('store');
     Route::get('/{id}', 'PictureController@show')->name('show');
-    Route::get('/{id}/edit', 'PictureController@edit')->name('edit');
-    Route::put('/{id}','PictureController@update')->name('update');
-    Route::patch('/{id}','PictureController@update');
     Route::delete('/{id}', 'PictureController@destroy')->name('destroy');
 });
+
 
 Route::group(['prefix'=>'/admin','as'=>'admin.'],function(){
     Route::get('/delArticleShow', 'ArticlController@delArticleShow')->name('delArticleShow');

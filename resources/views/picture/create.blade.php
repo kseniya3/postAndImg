@@ -1,40 +1,51 @@
 @extends('adminlte::page')
 
 @section('content')
-    <div class="box box-primary">
-        <div class="box-header with-border">
-            <h3 class="box-title">Create Deal</h3>
-        </div>
+    <div class="container">
+        <br />
+        <h1 align="center">Image Resize</h1>
+        <br />
+        <form method="post" action="{{ route('pictures.store') }}" enctype="multipart/form-data">
+            @CSRF
+            <div class="form-group">
+                <label>Name Pictures</label>
+                <input type="text" class="form-control" name="name">
+            </div>
+            <div class="form-group">
+                <label>Select Image</label>
+                <input type="file" name="image" class="image" />
+            </div>
 
-        @if ($errors->any())
+            <button type="submit" class="btn btn-success">Upload Image</button>
+        </form>
+        <br />
+        @if(count($errors) > 0)
             <div class="alert alert-danger">
                 <ul>
-                    @foreach ($errors->all() as $error)
+                    @foreach($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
-            </div><br />
-    @endif
-        <form  role="form" method="POST" action="{{route('articles.store')}}" enctype="multipart/form-data">
-            @csrf
-            <div class="form-group">
-                <label for="exampleFormControlInput1">Name</label>
-                <input name="name" class="form-control" id="exampleFormControlInput1" value="{{old('name')}}">
             </div>
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">Date</label>
-                <input type="dateTime-local" name="date" class="form-control" value="{{old('date')}}">
-            </div>
-            <div class="form-group">
-                <label for="exampleFormControlTextarea1">Content</label>
-                <textarea name="content" class="form-control" id="content" rows="3">{{{ old('content') }}}</textarea>
-            </div>
+        @endif
 
-            <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
-
-            <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+        @if($message = session()->get('success'))
+            <div class="alert alert-success alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{{ $message }}</strong>
             </div>
-        </form>
+            <div class="row">
+                <div class="col-md-6">
+                    <strong>Original Image:</strong>
+                    <br/>
+                    <img src="{{url('/images/')}}{{'/'.session()->get('imageName')}}" alt="Image"/>
+                </div>
+                <div class="col-md-4">
+                    <strong>Thumbnail Image:</strong>
+                    <br/>
+                    <img src="{{url('/img/')}}{{'/'.session()->get('imageName')}}" alt="Image"/>
+                </div>
+            </div>
+        @endif
     </div>
 @endsection

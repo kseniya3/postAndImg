@@ -8,7 +8,6 @@
                     <div class="col-md-12">
                         <div class="card-header">
                             <h3 class="card-title">Articles Table</h3>
-
                             <div class="card-tools">
                                 <ul class="pagination pagination-sm float-right">
                                     {{$posts->links()}}

@@ -7,11 +7,10 @@
                 <div class="box-header with-border">
                     <div class="col-md-12">
                         <div class="card-header">
-                            <h3 class="card-title">Articles Table</h3>
-
+                            <h3 class="card-title">Picture Table</h3>
                             <div class="card-tools">
                                 <ul class="pagination pagination-sm float-right">
-                                    {{$posts->links()}}
+                                    {{$pictures->links()}}
                                 </ul>
                             </div>
                         </div>
@@ -21,30 +20,27 @@
                                 <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th style="width: 40px">Date</th>
-                                    <th style="width: 40px">User</th>
-                                    <th></th>
+                                    <th style="width: 40px">Storage</th>
+                                    <th style="width: 40px">Path</th>
+                                    <th>Articles</th>
                                     <th>
-                                        <a class="btn btn-success btn-block" href="{{route('articles.create')}}" role="button">Create</a>
+                                        <a class="btn btn-success btn-block" href="{{route('pictures.create')}}" role="button">Create</a>
                                     </th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($posts as $post)
+                                @foreach($pictures as $picture)
                                     <tr>
-                                        <td>{{ $post->name }}</td>
-                                        <td>{{ $post->date }}</td>
-                                        <td>{{ $post->user()->pluck('name')->implode('')}}</td>
-                                        <td>{{ substr($post->content, 0, 130)}}</td>
+                                        <td>{{ $picture->name }}</td>
+                                        <td>{{ $picture->storage }}</td>
+                                        <td>{{ $picture->path }}</td>
+                                        <td>{{$picture->articles_id}}</td>
                                         <td>
                                             <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
                                                 <div class="btn-group mr-2" role="group" aria-label="First group">
-                                                    <a class="btn btn-primary" href="{{route('articles.show', $post->id)}}" role="button">Show</a>
+                                                    <a class="btn btn-primary" href="{{route('pictures.show', $picture->id)}}" role="button">Show</a>
                                                 </div>
-                                                <div class="btn-group mr-2" role="group" aria-label="Second group">
-                                                    <a class="btn btn-primary" href="{{route('articles.edit', $post->id)}}" role="button">Edit</a>
-                                                </div>
-                                                <form method="POST" action="{{route('articles.destroy', $post->id)}}">
+                                                <form method="POST" action="{{route('pictures.destroy', $picture->id)}}">
                                                     @csrf
                                                     @method('DELETE')
                                                     <div class="btn-group" role="group" aria-label="Third group">
