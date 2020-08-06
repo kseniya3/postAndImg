@@ -6,6 +6,15 @@
             <div class="box">
                 <div class="box-header with-border">
                     <div class="col-md-12">
+                        @if(count($errors) > 0)
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <div class="card-header">
                             <h3 class="card-title">Picture Table</h3>
                             <div class="card-tools">
@@ -34,7 +43,15 @@
                                         <td>{{ $picture->name }}</td>
                                         <td>{{ $picture->storage }}</td>
                                         <td>{{ $picture->path }}</td>
-                                        <td>{{$picture->articles_id}}</td>
+                                        @if($picture->articles_id == null)
+                                            <td>
+                                                <div class="btn-group mr-2" role="group" aria-label="First group">
+                                                    <a class="btn btn-primary" href="{{route('pictures.addImgPostShow', $picture->id)}}" role="button">Add</a>
+                                                </div>
+                                            </td>
+                                        @else
+                                            <td>{{$picture->articles_id}}</td>
+                                        @endif
                                         <td>
                                             <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
                                                 <div class="btn-group mr-2" role="group" aria-label="First group">

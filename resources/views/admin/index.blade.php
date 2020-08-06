@@ -6,9 +6,17 @@
             <div class="box">
                 <div class="box-header with-border">
                     <div class="col-md-12">
+                        @if(count($errors) > 0)
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <div class="card-header">
                             <h3 class="card-title">Admin Table</h3>
-
                             <div class="card-tools">
                                 <ul class="pagination pagination-sm float-right">
                                     {{--                                    {{$users->links()}}--}}

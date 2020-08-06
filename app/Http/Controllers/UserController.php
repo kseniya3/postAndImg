@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:role-create', ['only' => ['create','store']]);
+        $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:role-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -59,23 +68,6 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $user = User::all();
-
-        $users =  $user->hasPermissionTo(Permission::find(1)->id);
-
-        dd($users);
-        //$user = User::find($id);
-        //return view('users.show',compact('user'));
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -89,7 +81,6 @@ class UserController extends Controller
 
         return view('admin.edit', ['user' => $user, 'roles' => $roles, 'userRole' => $userRole]);
     }
-
 
     /**
      * Update the specified resource in storage.

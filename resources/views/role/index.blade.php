@@ -6,12 +6,23 @@
             <div class="box">
                 <div class="box-header with-border">
                     <div class="col-md-12">
+
+                        @if(count($errors) > 0)
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <div class="card-header">
-                            <h3 class="card-title">Articles Table</h3>
+                            <h3 class="card-title">Roles Table</h3>
 
                             <div class="card-tools">
                                 <ul class="pagination pagination-sm float-right">
-{{--                                    {{$users->links()}}--}}
+                                    {{$roles->links()}}
                                 </ul>
                             </div>
                         </div>
@@ -21,8 +32,7 @@
                                 <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th style="width: 40px">Date</th>
-                                    <th style="width: 40px">User</th>
+                                    <th></th>
                                     <th></th>
                                     <th>
                                         <a class="btn btn-success btn-block" href="{{route('roles.create')}}" role="button">Create</a>
@@ -33,7 +43,11 @@
                                 @foreach($roles as $role)
                                     <tr>
                                         <td>{{ $role->name }}</td>
-                                        <td></td>
+                                        <td>
+                                            @foreach($role->permissions as $permission)
+                                            {{ $permission->name}}
+                                            @endforeach
+                                        </td>
                                         <td></td>
                                         <td>
                                             <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
@@ -54,7 +68,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        <!-- /.card-body -->
                     </div>
                 </div>
             </div>

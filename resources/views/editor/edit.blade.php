@@ -2,6 +2,15 @@
 
 @section('content')
     <div class="box box-primary">
+        @if(count($errors) > 0)
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="box-header with-border">
             <h3 class="box-title">Edit Articl</h3>
             @if($post->user != null)
@@ -10,16 +19,6 @@
                 <label for="post-title">Author: no</label>
             @endif
         </div>
-
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div><br />
-    @endif
         <form method="POST" action="{{route('articles.update', $post->id)}}">
             @csrf
             @method('PATCH')

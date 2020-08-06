@@ -2,19 +2,18 @@
 
 @section('content')
     <div class="box box-primary">
-        <div class="box-header with-border">
-            <h3 class="box-title">Create Deal</h3>
-        </div>
-
-        @if ($errors->any())
+        @if(count($errors) > 0)
             <div class="alert alert-danger">
                 <ul>
-                    @foreach ($errors->all() as $error)
+                    @foreach($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
-            </div><br />
-    @endif
+            </div>
+        @endif
+        <div class="box-header with-border">
+            <h3 class="box-title">Create Deal</h3>
+        </div>
         <form  role="form" method="POST" action="{{route('admin.store')}}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Picture;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Articl;
@@ -13,26 +14,28 @@ class ArticlController extends Controller
 
     function __construct()
     {
+        $this->middleware('auth');
         $this->middleware('permission:articl-list|articl-create|articl-edit|articl-delete', ['only' => ['index','show']]);
         $this->middleware('permission:articl-create', ['only' => ['create','store']]);
         $this->middleware('permission:articl-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:articl-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:articl-deleteHARD', ['only' => ['delArticle']]);
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     *
      */
     public function index()
     {
-        return view('editor.index', ['posts'=>Articl::with('user')->paginate(4)]);
+       return view('editor.index', ['posts'=>Articl::with('user')->paginate(4)]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
      */
     public function create()
     {
@@ -51,8 +54,7 @@ class ArticlController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     *
      */
     public function store(Request $request)
     {
@@ -83,8 +85,7 @@ class ArticlController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     *
      */
     public function show($id)
     {
@@ -94,8 +95,7 @@ class ArticlController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     *
      */
     public function edit($id)
     {
@@ -107,9 +107,7 @@ class ArticlController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     *
      */
     public function update(Request $request, $id)
     {
@@ -137,8 +135,7 @@ class ArticlController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     *
      */
     public function destroy($id)
     {
@@ -168,6 +165,17 @@ class ArticlController extends Controller
         Articl::onlyTrashed()->where('id', $id)->forceDelete();
         return redirect('/admin/delArticleShow')->with(['success' => 'Успешно удалено!']);
 
+    }
+
+    public function addImgShow($id)
+    {
+        return view('editor.showImg', ['pictures'=>Picture::with('articl')->paginate(4)]);
+    }
+
+    public function addImg(Request $request, $id)
+    {
+        $pictures = Picture::find($id);
+        return view('editor.showImg', ['pictures'=>Picture::with('articl')->paginate(4)]);
     }
 
 }
