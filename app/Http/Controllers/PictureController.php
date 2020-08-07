@@ -10,22 +10,23 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use App\Jobs\ResizeImageSave;
 
 class PictureController extends Controller
 {
     function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:articl-list|articl-create|articl-edit|articl-delete', ['only' => ['index','show']]);
-        $this->middleware('permission:articl-create', ['only' => ['create','store']]);
-        $this->middleware('permission:articl-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:articl-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:picture-list|picture-create|picture-edit|picture-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:picture-create', ['only' => ['create','store']]);
+        $this->middleware('permission:picture-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:picture-delete', ['only' => ['destroy']]);
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     *
      */
     public function index()
     {
@@ -35,7 +36,7 @@ class PictureController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     *
      */
     public function create()
     {
@@ -45,8 +46,7 @@ class PictureController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     *
      */
     public function store(Request $request)
     {
@@ -69,8 +69,6 @@ class PictureController extends Controller
 
             $imgOriginal->storeAs($destinationPath, $imgOriginalName);
 
-            //$path = $request->file('image')->store($destinationPath);
-
             Picture::create([
                 'name' => $imgOriginalName,
                 'storage' => 'home',
@@ -91,8 +89,6 @@ class PictureController extends Controller
             $destinationPath = '\public\img\featured';
 
             $imgOriginal->storeAs($destinationPath, $imgOriginalName);
-
-            //$path = $request->file('image')->store($destinationPath);
 
             Picture::create([
                 'name' => $imgOriginalName,
@@ -116,8 +112,6 @@ class PictureController extends Controller
 
             $imgOriginal->storeAs($destinationPath, $imgOriginalName);
 
-            //$path = $request->file('image')->store($destinationPath);
-
             Picture::create([
                 'name' => $imgOriginalName,
                 'storage' => 'blogEntires',
@@ -127,43 +121,7 @@ class PictureController extends Controller
 
         }else if($blocName = 'recentWork'){
 
-
         }
-
-//        $this->validate($request, [
-//            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-//        ]);
-//
-//        $imgOriginal = $request->file('image');
-//        if($request->get('name') == null){
-//            $imgOriginalName = $imgOriginal->getClientOriginalName();
-//        }else{
-//            $imgOriginalName = $request->get('name') . '.' . $imgOriginal->getClientOriginalExtension();
-//        };
-//
-//        $destinationPath = storage_path('app\public\img\resize')."\\";
-//
-//        Picture::create([
-//            'name' => $imgOriginalName,
-//            'storage' => 'resize',
-//            'path' => $destinationPath . $imgOriginalName,
-//            'type' => $imgOriginal->getClientOriginalExtension(),
-//        ]);
-//
-//        $img = Image::make($imgOriginal->path());
-//        $img->resize(100, 100, function ($constraint) {
-//            $constraint->aspectRatio();
-//        })->save($destinationPath.$imgOriginalName);
-//
-//        $destinationPath = storage_path('app\public\img\original');
-//        $imgOriginal->move($destinationPath, $imgOriginalName);
-//
-//        Picture::create([
-//            'name' => $imgOriginalName,
-//            'storage' => 'original',
-//            'path' => "\\" . $destinationPath . "\\"  .$imgOriginalName,
-//            'type' => $imgOriginal->getClientOriginalExtension(),
-//        ]);
 
         return back()
             ->with('success','Image Upload successful');
@@ -172,8 +130,7 @@ class PictureController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     *
      */
     public function show($id)
     {
@@ -183,8 +140,7 @@ class PictureController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     *
      */
     public function destroy($id)
     {
@@ -211,5 +167,24 @@ class PictureController extends Controller
     {
         DB::table('pictures')->where('id', $id)->update(['articles_id' => $request->get('postId')]);
         return redirect('/pictures')->with(['success' => 'Успешно добавлено!']);
+    }
+
+    public function resizeShow($id)
+    {
+        return view('picture.resizeShow',  ['picture' => Picture::find($id)]);
+    }
+
+    public function resize(Request $request, $id)
+    {
+        $this->validate($request, [
+            'width' => 'required|integer|max:1024|min:1',
+            'height' => 'required|integer|max:1024|min:1',
+        ]);
+
+        $imgOriginal = Picture::find($id);
+
+        ResizeImageSave::dispatch($imgOriginal, $request->get('width'), $request->get('height'));
+
+        return redirect('/pictures ')->with(['success' => 'Успешно добавлено!']);
     }
 }

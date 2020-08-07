@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\DB;
 
 class TemplateController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:articl-release', ['only' => ['index','destroy', 'addPost']]);
+    }
+
     public function welcome()
     {
         $slider = Articl::where('bloc', 'home')->get();
@@ -20,13 +25,13 @@ class TemplateController extends Controller
 
     public function index()
     {
-        return view('release.index', ['posts' => Articl::all()]);
+        return view('release.index', ['posts' => Articl::with('user')->paginate(5)]);
     }
 
-    public function show()
-    {
-        return view('welcome');
-    }
+//    public function show()
+//    {
+//        return view('welcome');
+//    }
 
     public function destroy($id)
     {
@@ -40,6 +45,5 @@ class TemplateController extends Controller
         DB::table('articles')->where('id', $request->get('postId'))->update(['bloc' => $request->get('blocName')]);
         return redirect('/template')->with(['success' => 'Успешно добавлено!']);
     }
-
 
 }

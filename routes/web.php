@@ -49,9 +49,11 @@ Route::group(['prefix'=>'/pictures','as'=>'pictures.'],function(){
     Route::delete('/{id}', 'PictureController@destroy')->name('destroy');
 
     Route::get('/{id}/addImgPostShow', 'PictureController@addImgPostShow')->name('addImgPostShow');
-    //Route::post('/addImgPost', 'PictureController@addImgPost')->name('addImgPost');
     Route::put('/{id}','PictureController@addImgPost')->name('addImgPost');
     Route::patch('/{id}','PictureController@addImgPost');
+
+    Route::get('/resize/{id}', 'PictureController@resizeShow')->name('resizeShow');
+    Route::post('/resize/{id}', 'PictureController@resize')->name('resize');
 
 });
 
@@ -63,7 +65,9 @@ Route::group(['prefix'=>'/template','as'=>'template.'],function(){
 
 Route::group(['prefix'=>'/admin','as'=>'admin.'],function(){
     Route::get('/delArticleShow', 'ArticlController@delArticleShow')->name('delArticleShow');
-    Route::delete('/{id}', 'ArticlController@delArticle')->name('delArticle');
+    Route::delete('/delArticleShow/{id}', 'ArticlController@delArticle')->name('delArticle');
+
+
     Route::get('/', 'UserController@index')->name('index');
     Route::get('/create', 'UserController@create')->name('create');
     Route::post('/store', 'UserController@store')->name('store');
@@ -84,7 +88,6 @@ Route::group(['prefix'=>'/roles','as'=>'roles.'], function() {
     Route::patch('/{id}','RoleController@update');
     Route::delete('/{id}', 'RoleController@destroy')->name('destroy');
 });
-
 
 
 Auth::routes();

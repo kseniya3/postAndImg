@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Articl;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ArticlController extends Controller
 {
@@ -42,15 +43,6 @@ class ArticlController extends Controller
         return view('editor.create');
     }
 
-    protected function validator(array $data,$str_Carbon)
-    {
-        return Validator::make($data,[
-            'name' => 'required|unique:articles,name|max:125',
-            'date' => 'required|date|after_or_equal:'.$str_Carbon,
-            'content' => 'required|max:1024',
-        ]);
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -58,14 +50,14 @@ class ArticlController extends Controller
      */
     public function store(Request $request)
     {
-
         $carbon = Carbon::now();
         $str_Carbon = (String)$carbon;
-        $validate = self::validator($request->all(),$str_Carbon);
-        if($validate->fails()){
-            /* dd($validate->errors()); */
-            return redirect()->back()->withErrors($validate)->withInput();
-        }
+
+        $this->validate($request, [
+            'name' => 'required|unique:articles,name|max:125',
+            'date' => 'required|date|after_or_equal:'.$str_Carbon,
+            'content' => 'required|max:1024',
+        ]);
 
         $post = Articl::create([
             'name' => $request->get('name'),
@@ -113,11 +105,11 @@ class ArticlController extends Controller
     {
         $post = Articl::find($id);
 
-        $validate=self::validator($request->all(),(string)$post->created_at);
-        if($validate->fails()){
-            /* dd($validate->errors()); */
-            return redirect()->back()->withErrors($validate)->withInput();
-        }
+        $this->validate($request, [
+            'name' => 'required|max:125',
+            'date' => 'required|date|',
+            'content' => 'required|max:1024',
+        ]);
 
         $post->name = $request->get('name');
         $post->date = $request->get('date');
@@ -141,7 +133,8 @@ class ArticlController extends Controller
     {
         $post = Articl::find($id);
 
-        if($post->user_id == auth()->user()->id){
+
+        if ($post->user_id == auth()->user()->id) {
 
             $post->delete();
 
@@ -153,6 +146,7 @@ class ArticlController extends Controller
         } else{
             return back()->withErrors(['msg' => 'Вы не можете удалить статью другого пользователя!'])->withInput();
         }
+
     }
 
     public function delArticleShow()
@@ -164,18 +158,19 @@ class ArticlController extends Controller
     {
         Articl::onlyTrashed()->where('id', $id)->forceDelete();
         return redirect('/admin/delArticleShow')->with(['success' => 'Успешно удалено!']);
-
     }
 
     public function addImgShow($id)
     {
-        return view('editor.showImg', ['pictures'=>Picture::with('articl')->paginate(4)]);
+       // dd(Articl::find($id)->pictures);
+
+        return view('editor.showImg', ['imgs' => Articl::find($id)->pictures]);
     }
 
-    public function addImg(Request $request, $id)
-    {
-        $pictures = Picture::find($id);
-        return view('editor.showImg', ['pictures'=>Picture::with('articl')->paginate(4)]);
-    }
+//    public function addImg(Request $request, $id)
+//    {
+//        $pictures = Picture::find($id);
+//        return view('editor.showImg', ['pictures'=>Picture::with('articl')->paginate(4)]);
+//    }
 
 }

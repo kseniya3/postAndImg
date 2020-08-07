@@ -18,7 +18,7 @@
                     <div class="box-body no-padding">
                         <strong>Resize Image:</strong>
                         <br/>
-                        <img src="{{url('/img/')}}{{'/' .$picture->storage . '/' . $picture->name}}" alt="Image"/>
+                        <img src="{{url('img/')}}{{'/' .$picture->storage . '/' . $picture->name}}" alt="Image"/>
                     </div>
                 </div>
             </div>

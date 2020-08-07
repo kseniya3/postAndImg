@@ -1,4 +1,4 @@
-/* 
+/*
 
 Sentra Template
 
@@ -284,7 +284,7 @@ header {
 
 .sidebar-navigation .social-icons {
   position: absolute;
-  width: 100%;  
+  width: 100%;
   bottom: 10px;
   padding: 0;
   margin: 0;
@@ -413,17 +413,17 @@ header {
   display: block;
 }
 
-.Modern-Slider .item-1 .image {
-  background-image: url(../img/slide_1.jpg);
-}
+/*.Modern-Slider .item-1 .image {*/
+/*  background-image: url(../img/slide_1.jpg);*/
+/*}*/
 
-.Modern-Slider .item-2 .image {
-  background-image: url(../img/slide_2.jpg);
-}
+/*.Modern-Slider .item-2 .image {*/
+/*  background-image: url(../img/slide_2.jpg);*/
+/*}*/
 
-.Modern-Slider .item-3 .image {
-  background-image: url(../img/slide_3.jpg);
-}
+/*.Modern-Slider .item-3 .image {*/
+/*  background-image: url(../img/slide_3.jpg);*/
+/*}*/
 
 .Modern-Slider .PrevArrow:before{content:'\f104';}
 
@@ -710,7 +710,7 @@ header {
   visibility: hidden;
   opacity: 0;
   -webkit-transition: all .6s .8s;
-  transition: all .6s .8s;  
+  transition: all .6s .8s;
 }
 .box-video.open .video-container{
   opacity: 1;
@@ -1018,7 +1018,7 @@ header {
     z-index:5;
   }
 
-  
+
 
 }
 

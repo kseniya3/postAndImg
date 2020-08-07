@@ -121,20 +121,22 @@
             <div class="Modern-Slider content-section" id="top">
                 <!-- Item -->
                 @foreach($sliderPosts as $sliderPost)
-                <div class="item item-1">
-                    <div class="img-fill">
-                        <div class="image"></div>
-                        <div class="info">
-                            <div>
-                                <h1>{{$sliderPost->name}}</h1>
-                                <p>{{$sliderPost->content}}</p>
-                                <div class="white-button button">
-                                    <a href="#featured">{{$sliderPost->name}}</a>
+                    @foreach($sliderPost->pictures as $img)
+                        <div class="item item-1">
+                            <div class="img-fill" style="background-image: url({{asset('storage/img/home/' . $img->storage . '/' . $img->name)}}); ">
+                                <div class="image"></div>
+                                <div class="info">
+                                    <div>
+                                        <h1>{{$sliderPost->name}}</h1>
+                                        <p>{{$sliderPost->content}}</p>
+                                        <div class="white-button button">
+                                            <a href="#featured">{{$sliderPost->name}}</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    @endforeach
                 @endforeach
             </div>
         </div>
