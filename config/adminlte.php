@@ -257,6 +257,10 @@ return [
             'text' => 'Pictures',
             'url'  => '/pictures',
         ],
+        [
+            'text' => 'Template',
+            'url'  => '/template',
+        ],
     ],
 
     /*

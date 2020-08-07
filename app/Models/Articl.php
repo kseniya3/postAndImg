@@ -23,6 +23,6 @@ class Articl extends Model
 
     public function pictures(){
 
-        return $this->hasMany('App\Models\Picture');
+        return $this->hasMany('App\Models\Picture','articles_id');
     }
 }
