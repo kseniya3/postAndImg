@@ -20,20 +20,6 @@
 </head>
 <body>
 <div class="flex-center position-ref full-height">
-    @if (Route::has('login'))
-        <div class="top-right links">
-            @auth
-                <a href="{{ url('/home') }}">Home</a>
-            @else
-                <a href="{{ route('login') }}">Login</a>
-
-                @if (Route::has('register'))
-                    <a href="{{ route('register') }}">Register</a>
-                @endif
-            @endauth
-        </div>
-    @endif
-
     <div class="content">
         <body>
         <header class="nav-down responsive-nav hidden-lg hidden-md">
@@ -60,7 +46,7 @@
 
         <div class="sidebar-navigation hidde-sm hidden-xs">
             <div class="logo">
-                <a href="#">Sen<em>tra</em></a>
+                <a href="">Sen<em>tra</em></a>
             </div>
             <nav>
                 <ul>
@@ -179,9 +165,9 @@
                 <div class="section-content">
                     <div class="masonry">
                         <div class="row">
-                            <div class="item">
-                                <div class="col-md-8">
-                                    <a href="img/portfolio_big_1.jpg" data-lightbox="image"><img src="img/portfolio_1.jpg" alt="image 1"></a>
+                            <div class="item second-item">
+                                <div class="col-md-4">
+                                    <a href="img/portfolio_big_1.jpg" data-lightbox="image"><img src="img/portfolio_1.jpg" alt="image 2"></a>
                                 </div>
                             </div>
                             <div class="item second-item">

@@ -97,7 +97,7 @@ class PictureController extends Controller
                 'type' => $imgOriginal->getClientOriginalExtension(),
             ]);
 
-        }else if($blocName = 'blogEntire'){
+        }else if($blocName == 'blogEntire'){
 
             $this->validate($request, [
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048|dimensions:width=306,height=230',
@@ -119,12 +119,29 @@ class PictureController extends Controller
                 'type' => $imgOriginal->getClientOriginalExtension(),
             ]);
 
-        }else if($blocName = 'recentWork'){
+        }else if($blocName == 'recentWork'){
 
+            $this->validate($request, [
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            ]);
+
+            if($request->get('name') == null){
+                $imgOriginalName = $imgOriginal->getClientOriginalName();
+            }else{
+                $imgOriginalName = $request->get('name') . '.' . $imgOriginal->getClientOriginalExtension();
+            };
+            $destinationPath = '\public\img\original';
+
+            $imgOriginal->storeAs($destinationPath, $imgOriginalName);
+
+            Picture::create([
+                'name' => $imgOriginalName,
+                'storage' => 'recentWork',
+                'path' => $destinationPath,
+                'type' => $imgOriginal->getClientOriginalExtension(),
+            ]);
         }
-
-        return back()
-            ->with('success','Image Upload successful');
+        return back()->with('success','Image Upload successful');
     }
 
     /**

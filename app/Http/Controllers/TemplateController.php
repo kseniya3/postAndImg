@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Articl;
+use App\Models\Picture;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,19 +20,17 @@ class TemplateController extends Controller
         $slider = Articl::where('bloc', 'home')->get();
         $featuredPost = Articl::where('bloc', 'featured')->get();
         $blogPost = Articl::where('bloc', 'blogEntires')->get();
+        $projects = Picture::where('storage', 'recentWork')->get();
 
-        return view('welcome', ['featuredPosts' => $featuredPost, 'sliderPosts' => $slider, 'blogPosts' => $blogPost]);
+//        dd($projects);
+
+        return view('welcome', ['featuredPosts' => $featuredPost, 'sliderPosts' => $slider, 'blogPosts' => $blogPost, 'projectImages' => $projects]);
     }
 
     public function index()
     {
         return view('release.index', ['posts' => Articl::with('user')->paginate(5)]);
     }
-
-//    public function show()
-//    {
-//        return view('welcome');
-//    }
 
     public function destroy($id)
     {

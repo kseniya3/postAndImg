@@ -133,7 +133,6 @@ class ArticlController extends Controller
     {
         $post = Articl::find($id);
 
-
         if ($post->user_id == auth()->user()->id) {
 
             $post->delete();
