@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Faker\Generator as Faker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -18,6 +19,7 @@ use App\Models\Articl;
 class ArticlCreateTest extends TestCase
 {
     use RefreshDatabase, WithFaker, DatabaseMigrations;
+    use WithoutMiddleware;
 
     public function setUp(): void
     {
@@ -30,38 +32,21 @@ class ArticlCreateTest extends TestCase
 
     public function testNewUserCreate()
     {
-
-//        $this->visit('/register')
-//            ->type('UserTest', 'name')
-//            ->type('emailTest', 'email')
-//            ->type('qwert123', 'password')
-//            ->type('qwert123', 'password_confirmation')
-//            ->press('Register')
-//            ->seePageIs('/home');
-
-        $data = [
-            'name' => 'UserTest',
-            'email' => 'emailTest@gmail.com',
-            'password' => bcrypt('qwert123'),
-            'confirm-password' => bcrypt('qwert123')
-        ];
-
-
+        $this->withoutMiddleware();
         $user = factory(\App\Models\User::class)->create();
-        //$user = User::create($data);
 
-        //$role = Role::create(['name' => 'admin']);
-        //$permission = Permission::create(['name' => 'articl-create', 'guard_name' => 'web']);
-        //$role->syncPermissions($permission);
-        //$user->assignRole('admin');
+        //$response = $this->actingAs($user)->json('POST', '/admin.store',$data);
+        $response = $this->actingAs($user)
+            ->post(route('admin.create'),[
+                'name' => $this->faker->words(3,true),
+                'email' => $this->faker->unique()->email,
+                'password' => bcrypt('qwert123'),
+                'confirm-password' =>'qwert123',
+                ]);
 
 
-
-        $response = $this->actingAs($user, 'api')->json('POST', '/admin/create',$data);
-        $response->assertStatus(200);
-        $response->assertJson(['status' => true]);
-        $response->assertJson(['message' => "Product Created!"]);
-        $response->assertJson(['data' => $data]);
+        //$response->assertStatus(200);
+        $response->assertRedirect(route('admin.index'));
     }
 
 
@@ -73,6 +58,11 @@ class ArticlCreateTest extends TestCase
 //            'date' => "2020-08-09 13:59:57",
 //            'content' => 'texttexttext'
 //        ];
+
+        //$role = Role::create(['name' => 'admin']);
+//        $permission = Permission::create(['name' => 'articl-create', 'guard_name' => 'web']);
+//        $role->syncPermissions($permission);
+//        $user->assignRole('admin');
 //
 //        $response = $this->json('POST', '/articles/create',$data);
 //        $response->assertStatus(401);
