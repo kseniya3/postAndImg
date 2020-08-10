@@ -26,8 +26,7 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $roles = Role::orderBy('id','DESC')->paginate(5);
-        return view('role.index', ['roles' => $roles]);
+        return view('role.index', ['roles' => Role::orderBy('id','DESC')->paginate(5)]);
     }
 
     /**
@@ -35,8 +34,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $permission = Permission::get();
-        return view('role.create', ['permissions' => $permission]);
+        return view('role.create', ['permissions' => Permission::get()]);
     }
 
     /**
@@ -53,7 +51,7 @@ class RoleController extends Controller
         $role = Role::create(['name' => $request->input('name')]);
         $role->syncPermissions($request->input('permission'));
 
-        return redirect()->route('roles.index')->with('success','Role created successfully');
+        return redirect()->route('roles.index')->with('success','Роли созданы');
     }
 
     /**
@@ -62,13 +60,10 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $role = Role::find($id);
-        $permissions = Permission::get();
         $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
-            ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
-            ->all();
+            ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')->all();
 
-        return view('role.edit', ['role' => $role,'permissions' => $permissions, 'rolePermissions' => $rolePermissions]);
+        return view('role.edit', ['role' => Role::find($id),'permissions' => Permission::get(), 'rolePermissions' => $rolePermissions]);
     }
 
     /**

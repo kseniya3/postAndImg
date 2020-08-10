@@ -85,9 +85,7 @@ class ArticlController extends Controller
      */
     public function edit($id)
     {
-        $post = Articl::find($id);
-
-        return view('editor.edit', ['post' => $post, 'users'=>User::all()]);
+        return view('editor.edit', ['post' => Articl::find($id), 'users'=>User::all()]);
     }
 
     /**
@@ -120,6 +118,8 @@ class ArticlController extends Controller
     }
 
     /**
+     *  Мягкое удаление
+     *
      * @param $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
@@ -141,7 +141,6 @@ class ArticlController extends Controller
         } else{
             return back()->withErrors(['msg' => 'Вы не можете удалить статью другого пользователя!'])->withInput();
         }
-
     }
 
     /**
@@ -153,6 +152,8 @@ class ArticlController extends Controller
     }
 
     /**
+     *  Жесткое удаление
+     *
      * @param $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */

@@ -53,6 +53,7 @@ class PictureController extends Controller
         $blocName = $request->get('blocName');
         $imgOriginal = $request->file('image');
 
+
         if($blocName == 'home'){
 
             $this->validate($request, [
