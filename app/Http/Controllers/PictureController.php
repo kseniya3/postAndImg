@@ -53,6 +53,11 @@ class PictureController extends Controller
         $blocName = $request->get('blocName');
         $imgOriginal = $request->file('image');
 
+        if($request->get('name') == null){
+            $imgOriginalName = $imgOriginal->getClientOriginalName();
+        }else{
+            $imgOriginalName = $request->get('name') . '.' . $imgOriginal->getClientOriginalExtension();
+        };
 
         if($blocName == 'home'){
 
@@ -60,42 +65,17 @@ class PictureController extends Controller
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048|dimensions:width=1400,height=750',
             ]);
 
-            if($request->get('name') == null){
-                $imgOriginalName = $imgOriginal->getClientOriginalName();
-            }else{
-                $imgOriginalName = $request->get('name') . '.' . $imgOriginal->getClientOriginalExtension();
-            };
             $destinationPath = '\public\img\home';
-
             $imgOriginal->storeAs($destinationPath, $imgOriginalName);
 
-            Picture::create([
-                'name' => $imgOriginalName,
-                'storage' => 'home',
-                'path' => $destinationPath."\\". $imgOriginalName,
-                'type' => $imgOriginal->getClientOriginalExtension(),
-            ]);
         }else if($blocName == 'featured'){
 
             $this->validate($request, [
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048|dimensions:width=306,height=360',
             ]);
 
-            if($request->get('name') == null){
-                $imgOriginalName = $imgOriginal->getClientOriginalName();
-            }else{
-                $imgOriginalName = $request->get('name') . '.' . $imgOriginal->getClientOriginalExtension();
-            };
             $destinationPath = '\public\img\featured';
-
             $imgOriginal->storeAs($destinationPath, $imgOriginalName);
-
-            Picture::create([
-                'name' => $imgOriginalName,
-                'storage' => 'featured',
-                'path' => $destinationPath."\\". $imgOriginalName,
-                'type' => $imgOriginal->getClientOriginalExtension(),
-            ]);
 
         }else if($blocName == 'blogEntire'){
 
@@ -103,21 +83,8 @@ class PictureController extends Controller
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048|dimensions:width=306,height=230',
             ]);
 
-            if($request->get('name') == null){
-                $imgOriginalName = $imgOriginal->getClientOriginalName();
-            }else{
-                $imgOriginalName = $request->get('name') . '.' . $imgOriginal->getClientOriginalExtension();
-            };
             $destinationPath = '\public\img\blogEntires';
-
             $imgOriginal->storeAs($destinationPath, $imgOriginalName);
-
-            Picture::create([
-                'name' => $imgOriginalName,
-                'storage' => 'blogEntires',
-                'path' => $destinationPath,
-                'type' => $imgOriginal->getClientOriginalExtension(),
-            ]);
 
         }else if($blocName == 'recentWork'){
 
@@ -125,22 +92,17 @@ class PictureController extends Controller
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             ]);
 
-            if($request->get('name') == null){
-                $imgOriginalName = $imgOriginal->getClientOriginalName();
-            }else{
-                $imgOriginalName = $request->get('name') . '.' . $imgOriginal->getClientOriginalExtension();
-            };
             $destinationPath = '\public\img\original';
-
             $imgOriginal->storeAs($destinationPath, $imgOriginalName);
-
-            Picture::create([
-                'name' => $imgOriginalName,
-                'storage' => 'recentWork',
-                'path' => $destinationPath,
-                'type' => $imgOriginal->getClientOriginalExtension(),
-            ]);
         }
+
+        Picture::create([
+            'name' => $imgOriginalName,
+            'storage' => $blocName,
+            'path' => $destinationPath,
+            'type' => $imgOriginal->getClientOriginalExtension(),
+        ]);
+
         return back()->with('success','Image Upload successful');
     }
 
