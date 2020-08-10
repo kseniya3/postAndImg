@@ -24,9 +24,7 @@ class ArticlController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -34,9 +32,7 @@ class ArticlController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -44,9 +40,9 @@ class ArticlController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
     {
@@ -75,9 +71,8 @@ class ArticlController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     *
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($id)
     {
@@ -85,9 +80,8 @@ class ArticlController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     *
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
@@ -97,9 +91,10 @@ class ArticlController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request, $id)
     {
@@ -125,16 +120,12 @@ class ArticlController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     *
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy($id)
     {
         $post = Articl::find($id);
-
-
-
 
         if ($post->user_id == auth()->user()->id) {
 
@@ -153,28 +144,32 @@ class ArticlController extends Controller
 
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function delArticleShow()
     {
         return view('admin.deleteArticles', ['posts' => Articl::onlyTrashed()->get()]);
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function delArticle($id)
     {
         Articl::onlyTrashed()->where('id', $id)->forceDelete();
         return redirect('/admin/delArticleShow')->with(['success' => 'Успешно удалено!']);
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function addImgShow($id)
     {
-       // dd(Articl::find($id)->pictures);
-
         return view('editor.showImg', ['imgs' => Articl::find($id)->pictures]);
     }
 
-//    public function addImg(Request $request, $id)
-//    {
-//        $pictures = Picture::find($id);
-//        return view('editor.showImg', ['pictures'=>Picture::with('articl')->paginate(4)]);
-//    }
 
 }

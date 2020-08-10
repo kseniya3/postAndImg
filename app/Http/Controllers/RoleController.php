@@ -20,21 +20,30 @@ class RoleController extends Controller
         $this->middleware('permission:role-delete', ['only' => ['destroy']]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(Request $request)
     {
         $roles = Role::orderBy('id','DESC')->paginate(5);
         return view('role.index', ['roles' => $roles]);
     }
 
-
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         $permission = Permission::get();
         return view('role.create', ['permissions' => $permission]);
-        //return view('roles.create',compact('permission'));
     }
 
-
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -47,7 +56,10 @@ class RoleController extends Controller
         return redirect()->route('roles.index')->with('success','Role created successfully');
     }
 
-
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit($id)
     {
         $role = Role::find($id);
@@ -59,7 +71,12 @@ class RoleController extends Controller
         return view('role.edit', ['role' => $role,'permissions' => $permissions, 'rolePermissions' => $rolePermissions]);
     }
 
-
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -73,13 +90,16 @@ class RoleController extends Controller
 
         $role->syncPermissions($request->input('permission'));
 
-        return redirect()->route('roles.index')->with('success','Role updated successfully');
+        return redirect()->route('roles.index')->with('success','Роли обновлены!');
     }
 
-
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy($id)
     {
         DB::table("roles")->where('id',$id)->delete();
-        return redirect()->route('roles.index')->with('success','Role deleted successfully');
+        return redirect()->route('roles.index')->with('success','Роли удалены');
     }
 }

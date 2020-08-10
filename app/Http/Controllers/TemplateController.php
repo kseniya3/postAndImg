@@ -15,6 +15,11 @@ class TemplateController extends Controller
         $this->middleware('permission:articl-release', ['only' => ['index','destroy', 'addPost']]);
     }
 
+    /**
+     * Вывод постов на главную view
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function welcome()
     {
         $slider = Articl::where('bloc', 'home')->get();
@@ -32,11 +37,18 @@ class TemplateController extends Controller
         );
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         return view('release.index', ['posts' => Articl::with('user')->paginate(5)]);
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function destroy($id)
     {
         DB::table('articles')->where('id', $id)->update(['bloc' => null]);
@@ -44,6 +56,10 @@ class TemplateController extends Controller
         return redirect('/template')->with(['success' => 'Успешно удалено!']);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function addPost(Request $request)
     {
         DB::table('articles')->where('id', $request->get('postId'))->update(['bloc' => $request->get('blocName')]);

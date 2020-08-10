@@ -24,9 +24,7 @@ class PictureController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -34,9 +32,7 @@ class PictureController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -44,15 +40,18 @@ class PictureController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Добавлние img по блокам. Сайт разбит на 4 блока (home,featured,blogEntire,recentWork).
+     * Для каждого блока отдельная папка для хранения
+     * Для каждого блока определенной размерности изображение (исключение recentWork)
      *
-     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
     {
         $blocName = $request->get('blocName');
         $imgOriginal = $request->file('image');
-
 
         if($blocName == 'home'){
 
@@ -145,9 +144,8 @@ class PictureController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     *
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($id)
     {
@@ -155,9 +153,8 @@ class PictureController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     *
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy($id)
     {
@@ -173,6 +170,12 @@ class PictureController extends Controller
         }
     }
 
+    /**
+     *  К img привязать post
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function addImgPostShow($id)
     {
         $picture = Picture::find($id);
@@ -180,17 +183,38 @@ class PictureController extends Controller
         return view('picture.addShow', ['picture' => $picture, 'articles' => Articl::all()]);
     }
 
+    /**
+     * К img привязать post
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function addImgPost(Request $request, $id)
     {
         DB::table('pictures')->where('id', $id)->update(['articles_id' => $request->get('postId')]);
         return redirect('/pictures')->with(['success' => 'Успешно добавлено!']);
     }
 
+    /**
+     * Job/Queue
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function resizeShow($id)
     {
         return view('picture.resizeShow',  ['picture' => Picture::find($id)]);
     }
 
+    /**
+     * Job/Queue
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function resize(Request $request, $id)
     {
         $this->validate($request, [
