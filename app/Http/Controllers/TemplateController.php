@@ -28,9 +28,6 @@ class TemplateController extends Controller
         $blogPostDate = Articl::where('bloc', 'blogEntires')->get('date');
         $projects = Picture::where('storage', 'recentWork')->get();
 
-        //dd($blogPost->sortBy('date'));
-
-
         return view('welcome',
             ['featuredPosts' => $featuredPost, 'sliderPosts' => $slider, 'projectImages' => $projects],
             ['blogPosts' => $blogPost->sortBy('date'), 'blogPostDate' => $blogPostDate->sortBy('date')]
