@@ -14,9 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'TemplateController@welcome')->name('welcome');
-//Route::get('/', function () {
-//    return view('welcome');
-//});
 
 Auth::routes();
 
@@ -49,7 +46,6 @@ Route::group(['prefix'=>'/pictures','as'=>'pictures.'],function(){
     Route::patch('/{id}','PictureController@addImgPost');
     Route::get('/resize/{id}', 'PictureController@resizeShow')->name('resizeShow');
     Route::post('/resize/{id}', 'PictureController@resize')->name('resize');
-
 });
 
 Route::group(['prefix'=>'/template','as'=>'template.'],function(){

@@ -19,18 +19,17 @@
                         <thead>
                         <tr>
                             <th>Name</th>
-                            <th style="width: 40px">Img</th>
-                            <th style="width: 40px">Bloc</th>
-                            <th style="width: 40px"></th>
+                            <th>Img</th>
+                            <th>Bloc</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($posts as $post)
+                            @foreach($post->pictures as $img)
                             <tr>
                                 <td>{{ $post->name }}</td>
-                                @foreach($post->pictures as $img)
-                                    <td>{{ $img->name}}</td>
-                                @endforeach
+                                <td>{{ $img->name}}</td>
                                 <td>{{ $post->bloc}}</td>
                                 <td>
                                     <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
@@ -44,6 +43,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            @endforeach
                         @endforeach
                         </tbody>
                     </table>
