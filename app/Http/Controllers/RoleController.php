@@ -20,11 +20,6 @@ class RoleController extends Controller
         $this->middleware('permission:role-delete', ['only' => ['destroy']]);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     *
-     */
     public function index(Request $request)
     {
         $roles = Role::orderBy('id','DESC')->paginate(5);
@@ -32,11 +27,6 @@ class RoleController extends Controller
     }
 
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     *
-     */
     public function create()
     {
         $permission = Permission::get();
@@ -45,11 +35,6 @@ class RoleController extends Controller
     }
 
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     *
-     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -63,11 +48,6 @@ class RoleController extends Controller
     }
 
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     *
-     */
     public function edit($id)
     {
         $role = Role::find($id);
@@ -79,11 +59,7 @@ class RoleController extends Controller
         return view('role.edit', ['role' => $role,'permissions' => $permissions, 'rolePermissions' => $rolePermissions]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     *
-     */
+
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -99,11 +75,8 @@ class RoleController extends Controller
 
         return redirect()->route('roles.index')->with('success','Role updated successfully');
     }
-    /**
-     * Remove the specified resource from storage.
-     *
-     *
-     */
+
+
     public function destroy($id)
     {
         DB::table("roles")->where('id',$id)->delete();

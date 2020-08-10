@@ -20,11 +20,16 @@ class TemplateController extends Controller
         $slider = Articl::where('bloc', 'home')->get();
         $featuredPost = Articl::where('bloc', 'featured')->get();
         $blogPost = Articl::where('bloc', 'blogEntires')->get();
+        $blogPostDate = Articl::where('bloc', 'blogEntires')->get('date');
         $projects = Picture::where('storage', 'recentWork')->get();
 
-//        dd($projects);
+        //dd($blogPost->sortBy('date'));
 
-        return view('welcome', ['featuredPosts' => $featuredPost, 'sliderPosts' => $slider, 'blogPosts' => $blogPost, 'projectImages' => $projects]);
+
+        return view('welcome',
+            ['featuredPosts' => $featuredPost, 'sliderPosts' => $slider, 'projectImages' => $projects],
+            ['blogPosts' => $blogPost->sortBy('date'), 'blogPostDate' => $blogPostDate->sortBy('date')]
+        );
     }
 
     public function index()

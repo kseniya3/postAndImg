@@ -109,7 +109,7 @@
                 @foreach($sliderPosts as $sliderPost)
                     @foreach($sliderPost->pictures as $img)
                         <div class="item item-1">
-                            <div class="img-fill" style="background-image: url({{asset('storage/img/home/' . $img->storage . '/' . $img->name)}}); ">
+                            <div class="img-fill" style="background-image: url({{asset('storage/img/home/' . $img->name)}}); ">
                                 <div class="image"></div>
                                 <div class="info">
                                     <div>
@@ -165,31 +165,13 @@
                 <div class="section-content">
                     <div class="masonry">
                         <div class="row">
+                            @foreach($projectImages as $key => $projectImage)
                             <div class="item second-item">
                                 <div class="col-md-4">
-                                    <a href="img/portfolio_big_1.jpg" data-lightbox="image"><img src="img/portfolio_1.jpg" alt="image 2"></a>
+                                    <a href="{{'storage/img/original/' .  $projectImage->name}}" data-lightbox="image"><img src="{{'storage/img/resize/' .  $projectImage->name}}" alt="image {{$key}}"></a>
                                 </div>
                             </div>
-                            <div class="item second-item">
-                                <div class="col-md-4">
-                                    <a href="img/portfolio_big_2.jpg" data-lightbox="image"><img src="img/portfolio_2.jpg" alt="image 2"></a>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="col-md-4">
-                                    <a href="img/portfolio_big_3.jpg" data-lightbox="image"><img src="img/portfolio_3.jpg" alt="image 3"></a>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="col-md-4">
-                                    <a href="img/portfolio_big_4.jpg" data-lightbox="image"><img src="img/portfolio_4.jpg" alt="image 4"></a>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="col-md-8">
-                                    <a href="img/portfolio_big_5.jpg" data-lightbox="image"><img src="img/portfolio_5.jpg" alt="image 5"></a>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -230,15 +212,15 @@
                     <div class="tabs-content">
                         <div class="wrapper">
                             <ul class="tabs clearfix" data-tabgroup="first-tab-group">
-                                <li><a href="#tab1" class="active">July 2018</a></li>
-                                <li><a href="#tab2">June 2018</a></li>
-                                <li><a href="#tab3">May 2018</a></li>
-                                <li><a href="#tab4">April 2018</a></li>
+                                @foreach($blogPostDate as $key =>$date)
+                                <li><a href="#tab{{$key}}" class="active">{{date('d-m-Y', strtotime($date->date))}}</a></li>
+                                @endforeach
                             </ul>
                             <section id="first-tab-group" class="tabgroup">
-                                <div id="tab1">
+                                @foreach($blogPostDate as $date)
+                                @foreach($blogPosts as $key => $blogPost)
+                                <div id="tab{{$key}}">
                                     <ul>
-                                        @foreach($blogPosts as $blogPost)
                                         <li>
                                             <div class="item">
                                                 @foreach($blogPost->pictures as $img)
@@ -254,37 +236,10 @@
                                                 </div>
                                             </div>
                                         </li>
-                                        @endforeach
-                                        <li>
-                                            <div class="item">
-                                                <img src="img/blog_2.jpg" alt="">
-                                                <div class="text-content">
-                                                    <h4>Cras commodo odio ut</h4>
-                                                    <span>16 July 2018</span>
-                                                    <p>Nam vel egestas nisi. Nullam lobortis magna at enim venenatis luctus. Nam finibus, mauris eu dictum iaculis, dolor tortor cursus quam, in volutpat augue lectus sed magna. Integer mollis lorem quis ipsum maximus finibus.</p>
-
-                                                    <div class="accent-button button">
-                                                        <a href="#contact">Continue Reading</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item">
-                                                <img src="img/blog_3.jpg" alt="">
-                                                <div class="text-content">
-                                                    <h4>Sed at massa turpis</h4>
-                                                    <span>10 July 2018</span>
-                                                    <p>Nam vel egestas nisi. Nullam lobortis magna at enim venenatis luctus. Nam finibus, mauris eu dictum iaculis, dolor tortor cursus quam, in volutpat augue lectus sed magna. Integer mollis lorem quis ipsum maximus finibus.</p>
-
-                                                    <div class="accent-button button">
-                                                        <a href="#contact">Continue Reading</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
                                     </ul>
                                 </div>
+                                    @endforeach
+                                @endforeach
                                 <div id="tab2">
                                     <ul>
                                         <li>

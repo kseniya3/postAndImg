@@ -40,7 +40,7 @@ class ResizeImageSave implements ShouldQueue
     public function handle()
     {
         $image = $this->imgOriginal;
-        $img = Image::make(storage_path('app\public\img\featured')."\\". $image->name)->resize($this->width, $this->height);
+        $img = Image::make(storage_path('app\public\img')."\\". $image->storage . "\\". $image->name)->resize($this->width, $this->height);
 
         Picture::create([
             'name' => $image->name,

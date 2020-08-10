@@ -25,13 +25,13 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th style="width: 40px">Name</th>
-                            <th style="width: 40px">Storage</th>
+                            <th>Name</th>
+                            <th>Storage</th>
                             <th>Path</th>
                             <th>Resize</th>
                             <th>Articles</th>
                             <th>
-                                <a class="btn btn-success btn-block" href="{{route('pictures.create')}}" role="button">Create</a>
+                                <a class="btn btn-success" href="{{route('pictures.create')}}" role="button">Create</a>
                             </th>
                         </tr>
                         </thead>
