@@ -109,7 +109,7 @@
                 @foreach($sliderPosts as $sliderPost)
                     @foreach($sliderPost->pictures as $img)
                         <div class="item item-1">
-                            <div class="img-fill" style="background-image: url({{asset('storage/img/home/' . $img->name)}}); ">
+                            <div class="img-fill" style="background-image: url({{url('storage/img/home/' . $img->name)}}); ">
                                 <div class="image"></div>
                                 <div class="info">
                                     <div>
@@ -141,7 +141,7 @@
                         <div class="item">
                             @foreach($featuredPost->pictures as $img)
                             <div class="image">
-                                <img src="{{asset('storage/img/' . $img->storage . '/' . $img->name)}}" alt="">
+                                <img src="{{url('storage/img/' . $img->storage . '/' . $img->name)}}" alt="">
                                 <div class="featured-button button">
                                     <a href="#projects">Continue Reading</a>
                                 </div>
@@ -168,7 +168,7 @@
                             @foreach($projectImages as $key => $projectImage)
                             <div class="item second-item">
                                 <div class="col-md-4">
-                                    <a href="{{'storage/img/original/' .  $projectImage->name}}" data-lightbox="image"><img src="{{'storage/img/resize/' .  $projectImage->name}}" alt="image {{$key}}"></a>
+                                    <a href="{{'storage/img/recentWork/' .  $projectImage->name}}" data-lightbox="image"><img src="{{'storage/img/resize/' .  $projectImage->name}}" alt="image {{$key}}"></a>
                                 </div>
                             </div>
                             @endforeach
@@ -224,7 +224,7 @@
                                         <li>
                                             <div class="item">
                                                 @foreach($blogPost->pictures as $img)
-                                                <img src="{{asset('storage/img/' . $img->storage . '/' . $img->name)}}"  alt="">
+                                                <img src="{{url('storage/img/' . $img->storage . '/' . $img->name)}}"  alt="">
                                                 @endforeach
                                                 <div class="text-content">
                                                     <h4>{{$blogPost->name}}</h4>
@@ -240,144 +240,6 @@
                                 </div>
                                     @endforeach
                                 @endforeach
-                                <div id="tab2">
-                                    <ul>
-                                        <li>
-                                            <div class="item">
-                                                <img src="img/blog_3.jpg" alt="">
-                                                <div class="text-content">
-                                                    <h4>Sed at massa turpis</h4>
-                                                    <span>30 June 2018</span>
-                                                    <p>Nam vel egestas nisi. Nullam lobortis magna at enim venenatis luctus. Nam finibus, mauris eu dictum iaculis, dolor tortor cursus quam, in volutpat augue lectus sed magna. Integer mollis lorem quis ipsum maximus finibus.</p>
-
-                                                    <div class="accent-button button">
-                                                        <a href="#contact">Continue Reading</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item">
-                                                <img src="img/blog_1.jpg" alt="">
-                                                <div class="text-content">
-                                                    <h4>Lorem ipsum dolor sit</h4>
-                                                    <span>24 June 2018</span>
-                                                    <p>Nam vel egestas nisi. Nullam lobortis magna at enim venenatis luctus. Nam finibus, mauris eu dictum iaculis, dolor tortor cursus quam, in volutpat augue lectus sed magna. Integer mollis lorem quis ipsum maximus finibus.</p>
-
-                                                    <div class="accent-button button">
-                                                        <a href="#contact">Continue Reading</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item">
-                                                <img src="img/blog_2.jpg" alt="">
-                                                <div class="text-content">
-                                                    <h4>Cras commodo odio ut</h4>
-                                                    <span>12 June 2018</span>
-                                                    <p>Nam vel egestas nisi. Nullam lobortis magna at enim venenatis luctus. Nam finibus, mauris eu dictum iaculis, dolor tortor cursus quam, in volutpat augue lectus sed magna. Integer mollis lorem quis ipsum maximus finibus.</p>
-
-                                                    <div class="accent-button button">
-                                                        <a href="#contact">Continue Reading</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div id="tab3">
-                                    <ul>
-                                        <li>
-                                            <div class="item">
-                                                <img src="img/blog_2.jpg" alt="">
-                                                <div class="text-content">
-                                                    <h4>Cras commodo odio ut</h4>
-                                                    <span>26 May 2018</span>
-                                                    <p>Nam vel egestas nisi. Nullam lobortis magna at enim venenatis luctus. Nam finibus, mauris eu dictum iaculis, dolor tortor cursus quam, in volutpat augue lectus sed magna. Integer mollis lorem quis ipsum maximus finibus.</p>
-
-                                                    <div class="accent-button button">
-                                                        <a href="#contact">Continue Reading</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item">
-                                                <img src="img/blog_1.jpg" alt="">
-                                                <div class="text-content">
-                                                    <h4>Lorem ipsum dolor sit</h4>
-                                                    <span>22 May 2018</span>
-                                                    <p>Nam vel egestas nisi. Nullam lobortis magna at enim venenatis luctus. Nam finibus, mauris eu dictum iaculis, dolor tortor cursus quam, in volutpat augue lectus sed magna. Integer mollis lorem quis ipsum maximus finibus.</p>
-
-                                                    <div class="accent-button button">
-                                                        <a href="#contact">Continue Reading</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item">
-                                                <img src="img/blog_3.jpg" alt="">
-                                                <div class="text-content">
-                                                    <h4>Integer ultrices augue</h4>
-                                                    <span>8 May 2018</span>
-                                                    <p>Nam vel egestas nisi. Nullam lobortis magna at enim venenatis luctus. Nam finibus, mauris eu dictum iaculis, dolor tortor cursus quam, in volutpat augue lectus sed magna. Integer mollis lorem quis ipsum maximus finibus.</p>
-
-                                                    <div class="accent-button button">
-                                                        <a href="#contact">Continue Reading</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div id="tab4">
-                                    <ul>
-                                        <li>
-                                            <div class="item">
-                                                <img src="img/blog_1.jpg" alt="">
-                                                <div class="text-content">
-                                                    <h4>Lorem ipsum dolor sit</h4>
-                                                    <span>26 April 2018</span>
-                                                    <p>Nam vel egestas nisi. Nullam lobortis magna at enim venenatis luctus. Nam finibus, mauris eu dictum iaculis, dolor tortor cursus quam, in volutpat augue lectus sed magna. Integer mollis lorem quis ipsum maximus finibus.</p>
-
-                                                    <div class="accent-button button">
-                                                        <a href="#contact">Continue Reading</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item">
-                                                <img src="img/blog_3.jpg" alt="">
-                                                <div class="text-content">
-                                                    <h4>Integer ultrices augue eu</h4>
-                                                    <span>24 April 2018</span>
-                                                    <p>Nam vel egestas nisi. Nullam lobortis magna at enim venenatis luctus. Nam finibus, mauris eu dictum iaculis, dolor tortor cursus quam, in volutpat augue lectus sed magna. Integer mollis lorem quis ipsum maximus finibus.</p>
-
-                                                    <div class="accent-button button">
-                                                        <a href="#contact">Continue Reading</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item">
-                                                <img src="img/blog_2.jpg" alt="">
-                                                <div class="text-content">
-                                                    <h4>Cras commodo odio ut</h4>
-                                                    <span>20 April 2018</span>
-                                                    <p>Nam vel egestas nisi. Nullam lobortis magna at enim venenatis luctus. Nam finibus, mauris eu dictum iaculis, dolor tortor cursus quam, in volutpat augue lectus sed magna. Integer mollis lorem quis ipsum maximus finibus.</p>
-
-                                                    <div class="accent-button button">
-                                                        <a href="#contact">Continue Reading</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
                             </section>
                         </div>
                     </div>

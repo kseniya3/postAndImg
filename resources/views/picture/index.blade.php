@@ -28,8 +28,8 @@
                             <th>Name</th>
                             <th>Storage</th>
                             <th>Path</th>
-                            <th>Resize</th>
                             <th>Articles</th>
+                            <th>Resize</th>
                             <th>
                                 <a class="btn btn-success" href="{{route('pictures.create')}}" role="button">Create</a>
                             </th>

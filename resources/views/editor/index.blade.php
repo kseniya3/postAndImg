@@ -41,7 +41,7 @@
                                 <td>{{ $post->name }}</td>
                                 <td>{{ $post->date }}</td>
                                 <td>{{ $post->user()->pluck('name')->implode('')}}</td>
-                                <td><a class="btn btn-primary" href="{{route('articles.addImgShow', $post->id)}}" role="button">...</a></td>
+                                <td><a class="btn btn-primary" href="{{route('articles.addImgShow', $post->id)}}" role="button">show Img</a></td>
                                 <td>{{ substr($post->content, 0, 110)}}</td>
                                 <td>
                                     <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">

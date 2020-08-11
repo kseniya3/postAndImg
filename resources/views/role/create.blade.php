@@ -26,7 +26,7 @@
                     </div>
                     <div class="form-check">
                         @foreach($permissions as $permission)
-                            <input class="form-check-input" type="checkbox" name="permission[]" value="{{$permission->id}}" id="defaultCheck1">
+                            <input class="form-check-input" type="checkbox" name="permission[]" value="{{$permission->id}}">
                             <label class="form-check-label" for="defaultCheck1">
                                 {{$permission->name}}
                             </label>

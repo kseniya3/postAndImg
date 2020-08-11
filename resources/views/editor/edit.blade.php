@@ -33,11 +33,11 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Date</label>
-                        <input type="text" name="date" value="{{$post->date}}" class="form-control" id="post-title">
+                        <input type="dateTime-local" min="2020-08-01T08:30" max="2030-06-30T16:30" name="date" value="{{$post->date}}" class="form-control" id="post-title">
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Content</label>
-                        <textarea name="content" class="form-control" id="content" rows="3">{{$post->content}}</textarea>
+                        <textarea name="content" class="form-control" id="content"  maxlength="1024" rows="3">{{$post->content}}</textarea>
                     </div>
 
                     <div class="form-group">

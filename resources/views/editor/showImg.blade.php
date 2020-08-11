@@ -12,7 +12,7 @@
                 <div class="card-body">
                     @foreach($imgs as $img)
                         <div>
-                            <img src="{{asset('storage/img/'.$img->storage.'/'.$img->name)}}" alt=""class="img-thumbnail">
+                            <img src="{{url('storage/img/'.$img->storage.'/'.$img->name) }}" alt=""class="img-thumbnail">
                             <a class="users-list-name" href="#">{{'storage/img/'.$img->storage.'/'.$img->name}}</a>
                         </div>
                     @endforeach

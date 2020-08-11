@@ -83,7 +83,7 @@ class PictureController extends Controller
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048|dimensions:width=306,height=230',
             ]);
 
-            $destinationPath = '\public\img\blogEntires';
+            $destinationPath = '\public\img\blogEntire';
             $imgOriginal->storeAs($destinationPath, $imgOriginalName);
 
         }else if($blocName == 'recentWork'){
@@ -92,7 +92,7 @@ class PictureController extends Controller
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             ]);
 
-            $destinationPath = '\public\img\original';
+            $destinationPath = '\public\img\recentWork';
             $imgOriginal->storeAs($destinationPath, $imgOriginalName);
         }
 
@@ -154,8 +154,15 @@ class PictureController extends Controller
      */
     public function addImgPost(Request $request, $id)
     {
-        DB::table('pictures')->where('id', $id)->update(['articles_id' => $request->get('postId')]);
-        return redirect('/pictures')->with(['success' => 'Успешно добавлено!']);
+        $articl = Articl::find($request->get('postId'));
+
+        if($articl->pictures->count() == 0)
+        {
+            DB::table('pictures')->where('id', $id)->update(['articles_id' => $request->get('postId')]);
+            return redirect('/pictures')->with(['success' => 'Успешно добавлено!']);
+        } else{
+            return redirect('/pictures')->with(['success' => 'Нет!']);
+        }
     }
 
     /**

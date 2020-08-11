@@ -9,7 +9,7 @@
                         <a class="btn btn-success" href="{{route('pictures.index')}}" role="button">Image</a>
                         <br/>
                         <br/>
-                        <img src="{{url('/img/')}}{{'/'.$picture->name}}" alt="Image"/>
+                        <img src="{{url('storage/img/' . $picture->storage . '/' . $picture->name)}}" alt="Image"/>
                     </div>
                 </div>
             </div>

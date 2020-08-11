@@ -17,9 +17,13 @@ Route::get('/', 'TemplateController@welcome')->name('welcome');
 
 Auth::routes();
 
-Route::get('/home', function() {
-    return view('home');
-})->name('home')->middleware('auth');
+//Route::get('/home', function() {
+//    return view('home');
+//})->name('home')->middleware('auth');
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('home', 'HomeController@index');
+});
 
 Route::group(['prefix'=>'/articles','as'=>'articles.'],function(){
     Route::get('/', 'ArticlController@index')->name('index');
@@ -77,7 +81,3 @@ Route::group(['prefix'=>'/roles','as'=>'roles.'], function() {
     Route::delete('/{id}', 'RoleController@destroy')->name('destroy');
 });
 
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
